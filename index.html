@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detector</title>
+    <style>
+        :root {
+            --bg: #f3f6fb;
+            --card: #ffffff;
+            --accent: #0f5ea8;
+            --text: #1f2937;
+            --muted: #4b5563;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top right, #dce9f9, var(--bg));
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            color: var(--text);
+        }
+
+        main {
+            width: min(92vw, 720px);
+            background: var(--card);
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 18px 42px rgba(15, 94, 168, 0.15);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.9rem;
+            letter-spacing: 0.2px;
+        }
+
+        p {
+            margin-top: 0;
+            color: var(--muted);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            border: 1px solid #c7d2e2;
+            border-radius: 10px;
+            padding: 12px;
+            font: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 14px;
+            padding: 10px 18px;
+            border: 0;
+            border-radius: 10px;
+            color: #ffffff;
+            background: linear-gradient(120deg, #0f5ea8, #2171be);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #system_response {
+            margin-top: 18px;
+            background: #f7fbff;
+            border: 1px solid #cbe0f9;
+            border-radius: 10px;
+            padding: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Emotion Detector</h1>
+    <p>Enter text and analyze emotional tone using the Watson NLP model.</p>
+
+    <label for="textToAnalyze">Text to analyze:</label>
+    <textarea id="textToAnalyze" placeholder="Type your text here..."></textarea>
+    <button type="button" onclick="runEmotionDetection()">Analyze Emotion</button>
+
+    <section id="system_response">Result will appear here.</section>
+</main>
+
+<script>
+    async function runEmotionDetection() {
+        const input = document.getElementById("textToAnalyze").value;
+        const response = await fetch(`/emotionDetector?textToAnalyze=${encodeURIComponent(input)}`);
+        const data = await response.text();
+        document.getElementById("system_response").textContent = data;
+    }
+</script>
+</body>
+</html>
